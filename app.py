@@ -12,8 +12,8 @@ st.write(os.getenv('AWS_SECRET_ACCESS_KEY'))
 # Uses st.experimental_memo to only rerun when the query changes or after 10 min.
 @st.experimental_memo(ttl=600)
 def read_csv(filename):
-    df = pd.read_csv(filename)
-    return df
+    with fs.open(filename) as f:
+        return pd.read_csv(f)
 
 filepath = 'fsdgbizbucket1/User.csv'
 users = read_csv(filepath)
